@@ -114,7 +114,7 @@ app.delete("/delete/:id", async (req: Request, res: Response) => {
   })    
   } catch (error) {
     res.status(400).json({
-      error: `Error occured while deleting the task`,
+      error: `Error  while deleting the task`,
       errorMsg: error,
     });
   }
