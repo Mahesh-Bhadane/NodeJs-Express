@@ -1,17 +1,17 @@
 import { Request,Response } from "express";
-
+import multer  from 'multer';
 require('dotenv').config();
 import express from "express";
 import { connection } from "./database";
 import { City, Task } from "./types";
-
+import path from 'path';
+import fs from 'fs';
 
 //create app instance
 const app = express();
 const PORT = process.env.PORT || 3000
 
 app.use(express.json());
-
 
 // get all cities route
 app.get("/", (req:Request, res:Response) => {
@@ -139,6 +139,39 @@ app.delete("/delete/:id", async (req: Request, res: Response) => {
     });
   }
 });
+
+//upload file
+const upload = multer({ dest: 'uploads/' });
+
+app.post('/upload', upload.single('file'), (req: any, res) => {
+  try{
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ error: `No File Uploaded!` }); 
+    }
+    return res.status(200).json({ filename: req.file.originalname, message: `file uploaded successfully!` });
+  }
+  catch (error) {
+    res.status(400).json({
+      error: `Error occured while uploading the file`,
+      errorMsg: error,
+    });
+  }
+});
+
+//View file
+app.get('/file/:filename', (req, res) => {
+  const { filename } = req.params;
+  const filePath = path.join(__dirname, 'uploads', filename);
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error reading file' });
+    }
+    return res.send(data);
+  });
+});
+
 
 
 app.listen(PORT, () => {
