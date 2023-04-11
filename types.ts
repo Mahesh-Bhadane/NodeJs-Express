@@ -12,3 +12,9 @@ export interface Task extends RowDataPacket {
     createdAt :  Date,
     UpdatedAt : Date,
 }
+
+export interface User {
+    id?: number;
+    email: string;
+    password: string;
+}
