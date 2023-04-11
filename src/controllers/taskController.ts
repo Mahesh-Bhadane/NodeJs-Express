@@ -1,13 +1,12 @@
-import { Router } from "express";
-import { connection } from "../database";
-import multer  from 'multer';
-import { Task } from "../types";
+import { Request, Response } from "express";
+import { connection } from "../db/database";
+import { City, Task } from "../types/types";
+import multer from "multer";
 import path from 'path';
 import fs from 'fs';
-const router = Router();
 
 // get all tasks
-router.get("/taskName", (req, res) => {
+export const taskName = (req:Request,res:Response) => {
     try {
       connection.connect(function (err:any) {
         if (err) {
@@ -21,11 +20,10 @@ router.get("/taskName", (req, res) => {
     } catch (error) {
       return res.status(400).json({ message: "Error occured", error: error });
     }
-  });
-  
+  }
 
   //Add a new task
-router.post("/newtask", (req, res) => {
+export const newtask = (req:Request,res:Response)=> {
     try {
       const { task_message } = req.body;
   
@@ -44,11 +42,11 @@ router.post("/newtask", (req, res) => {
     } catch (error:any) {
       return res.status(400).json({ message: error.message||"Unexpected Error occured", error: error.message });
     }
-  });
+  }
   
   
   //update a task
-  router.put("/update/:id", async (req, res) => {
+  export const updateTask = (req:Request,res:Response)=> {
     try{
     const { task_message,status } = req.body;
     const { id } = req.params;
@@ -76,10 +74,10 @@ router.post("/newtask", (req, res) => {
         errorMsg: error,
       });
     }
-  });
+  }
   
   //delete a task
-  router.delete("/delete/:id", async (req, res) => {
+  export const deletetask = (req:Request,res:Response) => {
     try {
     const { id } = req.params;
     if (!id) res.status(400).json({ error: `Id of the task was not obtained` });
@@ -94,38 +92,18 @@ router.post("/newtask", (req, res) => {
         errorMsg: error,
       });
     }
-  });
-  
-  //upload file
-  const upload = multer({ dest: 'uploads/' });
-  
-  router.post('/upload', upload.single('file'), (req: any, res) => {
-    try{
-      const file = req.file;
-      if (!file) {
-        return res.status(400).json({ error: `No File Uploaded!` }); 
-      }
-      return res.status(200).json({ filename: req.file.originalname, message: `file uploaded successfully!` });
-    }
-    catch (error) {
-      res.status(400).json({
-        error: `Error occured while uploading the file`,
-        errorMsg: error,
-      });
-    }
-  });
+  }
+
   
   //View file
-  router.get('/file/:filename', (req, res) => {
-    const { filename } = req.params;
-    const filePath = path.join(__dirname, 'uploads', filename);
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error reading file' });
+  export const viewFile = (req:Request,res:Response) => {
+        const { filename } = req.params;
+        const filePath = path.join(__dirname, 'uploads', filename);
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Error reading file' });
+          }
+          return res.send(data);
+        });
       }
-      return res.send(data);
-    });
-  });
-
-  export default router;

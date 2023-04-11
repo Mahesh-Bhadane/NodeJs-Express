@@ -1,8 +1,8 @@
 require('dotenv').config();
 import express from "express";
-import authRouter from './Router/authRouter';
-import cityRouter from './Router/cityRouter';
-import taskRouter from './Router/taskRouter';
+import authRouter from './src/routers/authRouter';
+import cityRouter from './src/routers/cityRouter';
+import taskRouter from './src/routers/taskRouter';
 
 //create app instance
 const app = express();

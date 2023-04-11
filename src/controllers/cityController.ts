@@ -1,12 +1,9 @@
-import { Router } from "express";
-import { connection } from "../database";
-import { City } from "../types";
+import { Request, Response } from "express";
+import { connection } from "../db/database";
+import { City } from "../types/types";
 
-const router = Router();
-
-
-// get all cities route
-router.get("/cityName", (req, res) => {
+//get all cities route
+export const cityName = (req:Request,res:Response) => {
     try {
       connection.connect(function (err:any) {
         if (err) {
@@ -20,11 +17,10 @@ router.get("/cityName", (req, res) => {
     } catch (error) {
       return res.status(400).json({ message: "Error occured", error: error });
     }
-  });
-
+  }
 
   //get user and product
-  router.get("/user", (req, res) => {
+  export const user = (req:Request,res:Response) => {
     try {
       connection.connect(function (err:any) {
         if (err) {
@@ -40,6 +36,4 @@ router.get("/cityName", (req, res) => {
     } catch (error) {
       return res.status(400).json({ message: "Error occured", error: error });
     }
-  });
-
-  export default router;
+  }
