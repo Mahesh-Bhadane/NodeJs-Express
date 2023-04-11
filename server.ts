@@ -22,7 +22,7 @@ app.get("/", (req:Request, res:Response) => {
       } 
     });
     connection.query<City[]>('SELECT * from city',  (_error, result)=> {
-        return res.status(200).json({ result, message: "ahbdhahdbasd" });
+        return res.status(200).json({ result, message: "City fetched Successfully!" });
     });
 
   } catch (error) {
@@ -46,6 +46,26 @@ app.get("/task", (req:Request, res:Response) => {
     return res.status(400).json({ message: "Error occured", error: error });
   }
 });
+
+//get user and product
+app.get("/user", (req:Request, res:Response) => {
+  try {
+    connection.connect(function (err:any) {
+      if (err) {
+        throw err;
+      } 
+    });
+    connection.query<any>
+    ("SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id", 
+     (_error, result)=> {
+        return res.status(200).json({ result, message: "Task fetched Successfully!" });
+    });
+
+  } catch (error) {
+    return res.status(400).json({ message: "Error occured", error: error });
+  }
+});
+
 
 
 //Add a new task
