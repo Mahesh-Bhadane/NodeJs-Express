@@ -1,7 +1,5 @@
-import { Request,Response } from "express";
 require('dotenv').config();
 import express from "express";
-import { connection } from "./database";
 import authRouter from './Router/authRouter';
 import cityRouter from './Router/cityRouter';
 import taskRouter from './Router/taskRouter';
