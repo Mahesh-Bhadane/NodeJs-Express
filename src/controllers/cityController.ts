@@ -30,7 +30,7 @@ export const cityName = (req:Request,res:Response) => {
       connection.query<any>
       ("SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id", 
        (_error, result)=> {
-          return res.status(200).json({ result, message: "Task fetched Successfully!" });
+          return res.status(200).json({ result, message: "User fetched Successfully!" });
       });
   
     } catch (error) {

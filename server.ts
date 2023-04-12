@@ -3,11 +3,11 @@ import express from "express";
 import authRouter from './src/routers/authRouter';
 import cityRouter from './src/routers/cityRouter';
 import taskRouter from './src/routers/taskRouter';
-
+import cors from "cors"
 //create app instance
 const app = express();
 const PORT = process.env.PORT || 3000
-
+app.use(cors());
 app.use(express.json());
 app.use('/api/auth',authRouter );
 app.use('/api/city',cityRouter );

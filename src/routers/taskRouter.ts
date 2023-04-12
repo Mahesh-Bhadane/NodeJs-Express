@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { connection } from "../db/database";
 import multer  from 'multer';
 
 import { deletetask, newtask, taskName, updateTask, viewFile } from "../controllers/taskController";
+import { authenticateToken } from "../middlewares/verifyJWT";
 const router = Router();
 
-router.get("/taskName", taskName);
-router.post("/newtask",newtask)  
-router.put("/update/:id", updateTask)
-router.delete("/delete/:id", deletetask)
-router.get('/file/:filename', viewFile)
+router.get("/taskName",authenticateToken, taskName);
+router.post("/newtask",authenticateToken,newtask)  
+router.put("/update/:id",authenticateToken, updateTask)
+router.delete("/delete/:id",authenticateToken, deletetask)
+router.get('/file/:filename',authenticateToken, viewFile)
 
   
 //upload file
