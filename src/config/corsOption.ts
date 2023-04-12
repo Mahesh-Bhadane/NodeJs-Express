@@ -1,10 +1,5 @@
 import cors, { CorsOptions, CorsOptionsDelegate } from "cors"
-
-const whiteList = [
-    'http://localhost:5000',
-    'http://localhost:5001',
-    'http://localhost:5002'
-]
+import { whiteList } from "./allowedOrigins";
   
 export const corsOptions: CorsOptions | CorsOptionsDelegate = {
     origin: (origin, callback) => {
