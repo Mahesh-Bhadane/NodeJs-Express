@@ -10,4 +10,6 @@ Serving Static Files,
 GET Method,
 POST Method,
 PUT Method,
-File Upload"
+File Upload,
+cors,
+JWT Authentication"
