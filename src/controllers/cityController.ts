@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { connection } from "../db/database";
+import { connection } from "../models/database";
 import { City } from "../types/types";
 
 //get all cities route

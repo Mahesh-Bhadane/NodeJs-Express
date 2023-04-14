@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
-import { connection } from "../db/database";
+import { connection } from "../models/database";
 import jwt from "jsonwebtoken";
 import { SendEmail } from "../utils/sendMail";
 
