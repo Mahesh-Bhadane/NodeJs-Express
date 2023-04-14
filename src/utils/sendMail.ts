@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 
-let mailTransporter = nodemailer.createTransport({
+const mailTransporter = nodemailer.createTransport({
   service: 'outlook',
   auth: {
     user: 'API_VERIFY@outlook.com',
@@ -9,7 +9,7 @@ let mailTransporter = nodemailer.createTransport({
 })
 
 export const SendEmail=(message:string)=>{
-let mailDetails = {
+const mailDetails = {
   from: 'API_VERIFY@outlook.com',
   to: 'mahesh.bhadane@torinit.ca',
   subject: 'Task Added ',
