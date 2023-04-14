@@ -4,6 +4,7 @@ import { City, Task } from "../types/types";
 import multer from "multer";
 import path from 'path';
 import fs from 'fs';
+import { SendEmail } from "../sendMail";
 
 // get all tasks
 export const taskName = (req:Request,res:Response) => {
@@ -37,6 +38,7 @@ export const newtask = (req:Request,res:Response)=> {
         UpdatedAt : new Date(),
       }
       connection.query<Task[]>("INSERT INTO tasks SET ?",taskData, (_error)=> {
+          SendEmail(`${taskData.taskMessage}`)
           return res.status(200).json({ message: "Task added Successfully!" });
       })
     } catch (error:any) {
