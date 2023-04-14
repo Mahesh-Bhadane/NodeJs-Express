@@ -12,7 +12,7 @@ export const SendEmail=(message:string)=>{
 const mailDetails = {
   from: 'API_VERIFY@outlook.com',
   to: 'mahesh.bhadane@torinit.ca',
-  subject: 'Task Added ',
+  subject: 'Task Added..!! ',
   text: message,
 }
 
