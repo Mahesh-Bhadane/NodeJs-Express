@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import { connection } from "../db/database";
 import jwt from "jsonwebtoken";
+import { SendEmail } from "../utils/sendMail";
 
 require('dotenv').config();
 const fsPromises = require('fs').promises;
@@ -27,6 +28,7 @@ export const register = (req:Request,res:Response)=>{
                 res.status(500).send('Internal server error');
                 return;
             }
+            SendEmail(`${email} registered successfully`)
             res.status(200).send('User registered successfully');
         });
     })
