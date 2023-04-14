@@ -1,8 +1,8 @@
-# NodeJs-CRUD
+# NodeJs
 
 "Node JS MySQL"	
 
-"Express Overview,
+Express Overview,
 Installing Express,
 Request & Response,
 Basic Routing,
@@ -12,4 +12,6 @@ POST Method,
 PUT Method,
 File Upload,
 cors,
-JWT Authentication"
+JWT Authentication
+allowedOrigin
+NodeMailer
