@@ -2,7 +2,7 @@
 
 "Node JS MySQL"	
 
-"Express Overview,
+Express Overview,
 Installing Express,
 Request & Response,
 Basic Routing,
@@ -14,4 +14,4 @@ File Upload,
 cors,
 JWT Authentication
 allowedOrigin
-NodeMailer"
+NodeMailer
