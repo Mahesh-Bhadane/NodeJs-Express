@@ -12,4 +12,6 @@ POST Method,
 PUT Method,
 File Upload,
 cors,
-JWT Authentication"
+JWT Authentication
+allowedOrigin
+NodeMailer"
