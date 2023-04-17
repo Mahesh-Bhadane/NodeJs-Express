@@ -15,3 +15,4 @@ cors,
 JWT Authentication
 allowedOrigin
 NodeMailer
+CSV Upload
