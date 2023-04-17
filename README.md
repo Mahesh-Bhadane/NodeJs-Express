@@ -2,7 +2,7 @@
 
 "Node JS MySQL"	
 
-Express Overview,
+Express Overview,		
 Installing Express,
 Request & Response,
 Basic Routing,
@@ -12,8 +12,8 @@ POST Method,
 PUT Method,
 File Upload,
 cors,
-JWT Authentication
-allowedOrigin
-NodeMailer
-Zod Validations
+JWT Authentication,
+allowedOrigin,
+NodeMailer,
+Zod Validations,
 CSV Upload
