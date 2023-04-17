@@ -79,13 +79,19 @@ router.post('/uploadCSV', upload.single('file'), (req:any, res) => {
     .pipe(csvParser())
     .on('data', (data) => results.push(data))
     .on('end', () => {
-      const values = results.map((result:any) => [result.ID, result.NAME]);
-      connection.query('INSERT INTO mytable (ID, NAME) VALUES ?', [values], (error) => {
+      const values = results.map((result:any) => [result.NAME]);
+      connection.query('INSERT INTO mytable (NAME) VALUES ?', [values], (error) => {
         if (error) {
           console.error(error);
+          if (error?.code === "ER_DUP_ENTRY") {
+            res.status(400).json({
+              error: "Duplicate data",
+              errorMsg: error,
+            })}
           res.status(500).send('Database error');
           return;
         }
+        
         res.send('File uploaded successfully');
       });
     });
