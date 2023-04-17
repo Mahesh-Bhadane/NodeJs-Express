@@ -15,4 +15,5 @@ cors,
 JWT Authentication
 allowedOrigin
 NodeMailer
+Zod Validations
 CSV Upload
