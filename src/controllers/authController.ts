@@ -10,14 +10,15 @@ require("dotenv").config();
 export const register = (req: Request, res: Response) => {
   const saltRounds = 10;
   try {
-    bcrypt.hash(req.body.password, saltRounds, (err: any, hashedPassword: any) => {
+    const { email, password } = req.body;
+    bcrypt.hash(password, saltRounds, (err: any, hashedPassword: any) => {
       if (err) {
         console.error("Error hashing password:", err);
         res.status(500).send("Internal server error");
         return;
       }
       const query = "INSERT INTO user (email, password) VALUES (?, ?)";
-      const values = [req.body.email, hashedPassword];
+      const values = [email, hashedPassword];
 
       connection.query(query, values, (error, result) => {
         if (error) {
@@ -25,7 +26,7 @@ export const register = (req: Request, res: Response) => {
           res.status(500).send("Internal server error");
           return;
         }
-        SendEmail(`${req.body.email} registered successfully`);
+        SendEmail(`${email} registered successfully`);
         res.status(200).send("User registered successfully");
       });
     });
@@ -37,9 +38,11 @@ export const register = (req: Request, res: Response) => {
 
 //login
 export const login = (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
   connection.query(
     "SELECT * FROM user WHERE email = ?",
-    [req.body.email],
+    [email],
     async (error: any, results: any) => {
       if (error) {
         console.error("Error fetching user:", error);
@@ -51,7 +54,7 @@ export const login = (req: Request, res: Response) => {
 
       const user = results[0];
 
-      const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+      const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
         const accessToken = jwt.sign(
           { email: user.email },
@@ -61,24 +64,24 @@ export const login = (req: Request, res: Response) => {
         const refreshToken = jwt.sign(
           { email: user.email },
           process.env.REFRESH_TOKEN_SECRET!,
-                    { expiresIn: "1d" }
-                  );
-                  // Saving refreshToken with current user
-                  user.refreshToken = refreshToken;
-                  connection.query(
-                    "UPDATE user SET refreshToken = ? WHERE email = ?",
-                    [refreshToken, req?.body?.email],
-                    (error: any, result: any) => {
-                      if (error) {
-                        console.error("Error updating user with refresh token:", error);
-                        return res.status(500).send("Internal server error");
-                      }
-                    }
-                  );
-                  return res.json({ accessToken });
-                } else {
-                  return res.status(401).send("Invalid email or password");
-                }
-              }
-            );
+          { expiresIn: "1d" }
+        );
+        // Saving refreshToken with current user
+        user.refreshToken = refreshToken;
+        connection.query(
+          "UPDATE user SET refreshToken = ? WHERE email = ?",
+          [refreshToken, email],
+          (error: any, result: any) => {
+            if (error) {
+              console.error("Error updating user with refresh token:", error);
+              return res.status(500).send("Internal server error");
+            }
           }
+        );
+        return res.json({ accessToken });
+      } else {
+        return res.status(401).send("Invalid email or password");
+      }
+    }
+  );
+};

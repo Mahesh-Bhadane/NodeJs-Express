@@ -3,13 +3,15 @@ import multer  from 'multer';
 
 import { deletetask, newtask, taskName, updateTask, viewFile } from "../controllers/taskController";
 import { authenticateToken } from "../middlewares/verifyJWT";
+import {validate} from "../middlewares/validate";
+import { DeleteTaskSchema, FileSchema, NewTaskSchema, UpdateTaskSchema } from "../utils/validationSchemas";
 const router = Router();
 
 router.get("/taskName",authenticateToken, taskName);
-router.post("/newtask",authenticateToken,newtask)  
-router.put("/update/:id",authenticateToken, updateTask)
-router.delete("/delete/:id",authenticateToken, deletetask)
-router.get('/file/:filename',authenticateToken, viewFile)
+router.post("/newtask",authenticateToken,validate(NewTaskSchema),newtask)  
+router.put("/update/:id",authenticateToken, validate(UpdateTaskSchema),updateTask)
+router.delete("/delete/:id",authenticateToken, validate(DeleteTaskSchema),deletetask)
+router.get('/file/:filename',authenticateToken, validate(FileSchema),viewFile)
 
   
 //upload file

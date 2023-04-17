@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { connection } from "../models/database";
-import { City, Task } from "../types/types";
-import multer from "multer";
+import {  Task } from "../types/types";
 import path from 'path';
 import fs from 'fs';
 import { SendEmail } from "../utils/sendMail";
